@@ -1,0 +1,64 @@
+USERS_TABLE = """
+	CREATE TABLE IF NOT EXISTS users (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		chat_id INTEGER UNIQUE NOT NULL,
+		name VARCHAR(100) NOT NULL,
+		phone VARCHAR(20) NOT NULL,
+		is_admin INTEGER DEFAULT 0,
+		payment INTEGER DEFAULT 0
+	);
+"""
+
+VIDOES = """
+	CREATE TABLE IF NOT EXISTS videos (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		file_id TEXT NOT NULL,
+		caption TEXT NOT NULL,
+		button_in_id INTAGER,
+		FOREIGN KEY (button_in_id)
+		    REFERENCES button_in(id)
+	);
+"""
+
+BUTTONS = """
+	CREATE TABLE IF NOT EXISTS buttons (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(200) NOT NULL
+	);
+"""
+
+BUTTONS_IN = """
+	CREATE TABLE IF NOT EXISTS buttons_in (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name VARCHAR(200) NOT NULL,
+		button_id INTEGER,
+		FOREIGN KEY (button_id)
+		    REFERENCES buttons(id)
+);
+"""
+
+QUESTIONS = """
+	CREATE TABLE IF NOT EXISTS questions (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		text TEXT NOT NULL,
+		a VARCHAR(200) NOT NULL,
+		b VARCHAR(200) NOT NULL,
+		c VARCHAR(200) NOT NULL,
+		right VARCHAR(200) NOT NULL,
+		video_id INTEGER,
+		FOREIGN KEY (video_id)
+			REFERENCES videos(id)
+	);
+"""
+RESULTS = """
+	CREATE TABLE IF NOT EXISTS results (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		result INTEGER NOT NULL,
+		chat_id INTEGER,
+		video_id INTEGER,
+		FOREIGN KEY (video_id)
+			REFERENCES videos(id),
+		FOREIGN KEY (chat_id)
+			REFERENCES users(chat_id)
+	);
+"""

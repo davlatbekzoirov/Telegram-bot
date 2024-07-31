@@ -53,7 +53,7 @@ MIDDLEWARE = [
 
 JAZZMIN_SETTINGS = {
     'site_title': 'My Admin Panel',
-    'site_logo': 'D:\Backend\MyProjects\Telegram bot\aiogram 3\QuizBot\config\images.jpg',
+    'site_logo': 'images.jpg',
     'welcome_sign': 'Welcome to My Admin Panel',
     'show_ui_builder': True,
     'navigation_expanded': False,

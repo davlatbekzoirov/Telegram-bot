@@ -1,13 +1,23 @@
 from django.db import models
 
 class User(models.Model):
+    APPLICANT = 'applicant'
+    STUDENT = 'student'
+    
+    ROLE_CHOICES = [
+        (APPLICANT, 'Applicant'),
+        (STUDENT, 'Student'),
+    ]
+
     id = models.BigAutoField(verbose_name='ID', primary_key=True)
     name = models.CharField(verbose_name='Name', max_length=100)
-    age = models.PositiveIntegerField(verbose_name='Age', default=18)
+    age = models.PositiveIntegerField(verbose_name='Age')
     phone_number = models.CharField(verbose_name='Phone Number', max_length=20, blank=True, null=True)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=APPLICANT)
+    # telegram_id = models.BigIntegerField(verbose_name='Telegram ID', unique=True, default=1)
 
     def __str__(self):
-        return self.name
+        return f"Applicant {self.id} ({self.get_role_display()})"
 
 class ApplicantQuestion(models.Model):
     text = models.TextField(verbose_name='Question Applicant')
@@ -28,7 +38,7 @@ class Applicant(models.Model):
 
 
 class StudentQuestion(models.Model):
-    text = models.TextField(verbose_name='Question')
+    text = models.TextField(verbose_name='Student Question')
 
 class StudentOption(models.Model):
     question = models.ForeignKey(StudentQuestion, related_name='options', on_delete=models.CASCADE)
@@ -42,4 +52,4 @@ class Student(models.Model):
     selected_option = models.ForeignKey(StudentOption, related_name='students', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Applicant {self.id}"
+        return f"Student {self.id}"
